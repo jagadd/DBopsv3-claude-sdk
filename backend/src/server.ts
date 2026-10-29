@@ -7,7 +7,13 @@ app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
   const mcp = config.mcpServers.dbatools;
-  res.json({ ok: true, model: config.model, mcp: mcp.type === "http" ? mcp.url : "stdio" });
+  res.json({
+    ok: true,
+    provider: config.provider,
+    resource: config.resource,
+    model: config.model,
+    mcp: mcp.type === "http" ? mcp.url : "stdio",
+  });
 });
 
 app.post("/api/chat", async (req, res) => {

@@ -19,9 +19,11 @@ React (Vite, :5173) ──SSE──> Express + Claude Agent SDK (:3001) ──HT
 
 ```bash
 npm install && npm run install:all
-cp backend/.env.example backend/.env   # set ANTHROPIC_API_KEY and DBATOOLS_MCP_URL
+cp backend/.env.example backend/.env   # set the Foundry variables and DBATOOLS_MCP_URL
 npm run dev                            # http://localhost:5173
 ```
+
+Claude is reached through Microsoft Foundry: set `ANTHROPIC_FOUNDRY_RESOURCE` (or `ANTHROPIC_FOUNDRY_BASE_URL`) and `ANTHROPIC_FOUNDRY_API_KEY`, keep `CLAUDE_CODE_USE_FOUNDRY=1`, and set `CLAUDE_MODEL` to your Foundry deployment name.
 
 Set `DBATOOLS_MCP_URL` to your HTTPS fork's MCP endpoint (and `DBATOOLS_MCP_TOKEN` if it requires a bearer token). Leave it empty and set `DBATOOLS_MCP_COMMAND` to use a local stdio server instead. The MCP host needs PowerShell 7 and the dbatools module, and must reach the SQL Server instances (or the target machine for `Install-DbaInstance`).
 
