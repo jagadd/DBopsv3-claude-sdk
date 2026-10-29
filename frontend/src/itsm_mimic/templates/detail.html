@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ incident.number }} | DBAops ITSM{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="panel-header">
+    <h1>Incident {{ incident.number }}</h1>
+    <span id="state-badge" class="state state-{{ incident.state | lower | replace(' ', '-') }}">{{ incident.state }}</span>
+  </div>
+  <form method="post" action="/incidents/{{ incident.number }}" class="form-grid">
+    <label>Number <input value="{{ incident.number }}" readonly></label>
+    <label>Configuration item <input value="{{ incident.configuration_item }}" readonly></label>
+    <label>Category <input value="{{ incident.category or '' }}" readonly></label>
+    <label>Assignment group
+      <select name="assignment_group">
+        {% for g in groups %}<option {% if incident.assignment_group == g %}selected{% endif %}>{{ g }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>State
+      <select name="state" id="state-select">
+        {% for s in states %}<option {% if incident.state == s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Priority
+      <select name="priority">
+        {% for p in range(1, 6) %}<option value="{{ p }}" {% if incident.priority == p %}selected{% endif %}>{{ p }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="wide">Short description <input value="{{ incident.short_description }}" readonly></label>
+    <label class="wide">Description <textarea rows="4" readonly>{{ incident.description }}</textarea></label>
+    <div class="wide actions"><button class="btn btn-primary" type="submit">Update</button></div>
+  </form>
+</div>
+
+<div class="panel approvals" id="approvals-panel" hidden>
+  <div class="panel-header"><h2>Approval required</h2></div>
+  <ol id="approvals" class="approval-list"></ol>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <h2>Work notes</h2>
+    <a href="/incidents/{{ incident.number }}/trace">Agent trace</a>
+    <span class="muted" id="notes-status"></span>
+  </div>
+  <form method="post" action="/incidents/{{ incident.number }}/notes" class="note-form">
+    <textarea name="text" rows="3" required placeholder="Add a work note"></textarea>
+    <button class="btn" type="submit">Post</button>
+  </form>
+  <ol id="work-notes" class="notes"></ol>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', path='incident.js') }}" data-number="{{ incident.number }}"></script>
+{% endblock %}

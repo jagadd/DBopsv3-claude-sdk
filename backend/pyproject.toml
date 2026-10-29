@@ -1,0 +1,39 @@
+[project]
+name = "dbaops"
+version = "0.1.0"
+description = "DBAops v3: autonomous SQL Server DBA ticket handler built on the Claude Agent SDK"
+requires-python = ">=3.12"
+dependencies = [
+    "claude-agent-sdk>=0.2.174",
+    "fastapi>=0.162",
+    "uvicorn[standard]>=0.54",
+    "httpx>=0.28",
+    "pydantic>=2.11",
+    "pydantic-settings>=2.16",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=9", "pytest-asyncio>=1.4", "ruff>=0.17"]
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106"]

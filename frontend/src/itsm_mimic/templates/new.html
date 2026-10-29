@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}New Incident | DBAops ITSM{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="panel-header"><h1>New Incident</h1></div>
+  {% if errors %}
+  <ul class="errors">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% endif %}
+  <form method="post" action="/incidents" class="form-grid">
+    <label>Configuration item
+      <input name="configuration_item" required value="{{ form.configuration_item or '' }}" placeholder="SQLPROD01\INST1">
+    </label>
+    <label>Category
+      <select name="category">
+        <option value="">-- None --</option>
+        {% for c in categories %}<option {% if form.category == c %}selected{% endif %}>{{ c }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Assignment group
+      <select name="assignment_group" required>
+        {% for g in groups %}<option {% if form.assignment_group == g %}selected{% endif %}>{{ g }}</option>{% endfor %}
+      </select>
+    </label>
+    <label>Priority
+      <select name="priority">
+        {% for p in range(1, 6) %}
+        <option value="{{ p }}" {% if (form.priority or 4) == p %}selected{% endif %}>{{ p }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="wide">Short description
+      <input name="short_description" required maxlength="160" value="{{ form.short_description or '' }}">
+    </label>
+    <label class="wide">Description
+      <textarea name="description" rows="6" maxlength="8000">{{ form.description or '' }}</textarea>
+    </label>
+    <div class="wide actions"><button class="btn btn-primary" type="submit">Submit</button></div>
+  </form>
+</div>
+{% endblock %}

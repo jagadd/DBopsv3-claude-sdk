@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Trace {{ incident.number }} | DBAops ITSM{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="panel-header">
+    <h1>Agent trace · <a href="/incidents/{{ incident.number }}">{{ incident.number }}</a></h1>
+    <span class="muted">{{ events | length }} events</span>
+  </div>
+  {% if error %}<ul class="errors"><li>{{ error }}</li></ul>{% endif %}
+  {% if runs %}
+  <table class="list">
+    <thead><tr><th>Run</th><th>Status</th><th>Started</th><th>Ended</th><th>Turns</th><th>Cost (USD)</th><th>Session</th></tr></thead>
+    <tbody>
+      {% for r in runs %}
+      <tr {% if r.run_id == selected %}class="selected"{% endif %}>
+        <td><a href="?run_id={{ r.run_id }}">{{ r.run_id[:8] }}</a></td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.started_at }}</td>
+        <td>{{ r.ended_at or '' }}</td>
+        <td>{{ r.num_turns or '' }}</td>
+        <td>{{ '%.4f' | format(r.cost_usd) if r.cost_usd is not none else '' }}</td>
+        <td class="mono">{{ r.session_id or '' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% elif not error %}
+  <p class="empty">No agent runs for this incident yet.</p>
+  {% endif %}
+</div>
+
+{% if events %}
+<div class="panel">
+  <div class="panel-header"><h2>Events</h2></div>
+  <table class="list trace">
+    <thead><tr><th>#</th><th>Time (UTC)</th><th>Agent</th><th>Kind</th><th>Detail</th></tr></thead>
+    <tbody>
+      {% for e in events %}
+      <tr>
+        <td>{{ e.id }}</td>
+        <td class="mono">{{ e.ts[11:23] }}</td>
+        <td><span class="agent agent-{{ e.agent }}">{{ e.agent }}</span></td>
+        <td class="mono">{{ e.kind }}</td>
+        <td>
+          <details>
+            <summary>{{ e.data.tool or e.data.kind or e.data.state or e.data.status or e.data.type or '' }}{% if e.data.verdict %} · {{ e.data.verdict }}{% endif %}</summary>
+            <pre>{{ e.data_json }}</pre>
+          </details>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

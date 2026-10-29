@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Incidents | DBAops ITSM{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="panel-header"><h1>Incidents</h1></div>
+  {% if incidents %}
+  <table class="list">
+    <thead>
+      <tr>
+        <th>Number</th><th>Short description</th><th>Configuration item</th>
+        <th>Assignment group</th><th>Priority</th><th>State</th><th>Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in incidents %}
+      <tr>
+        <td><a href="/incidents/{{ i.number }}">{{ i.number }}</a></td>
+        <td>{{ i.short_description }}</td>
+        <td>{{ i.configuration_item }}</td>
+        <td>{{ i.assignment_group }}</td>
+        <td>{{ i.priority }}</td>
+        <td><span class="state state-{{ i.state | lower | replace(' ', '-') }}">{{ i.state }}</span></td>
+        <td>{{ i.updated_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty">No incidents yet. <a href="/incidents/new">Create one</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}
