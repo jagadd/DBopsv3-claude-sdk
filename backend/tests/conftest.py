@@ -62,7 +62,7 @@ def ticket_payload() -> dict:
         "short_description": "Database tempdb full on SQLPROD01",
         "description": "Users report errors; tempdb log full.",
         "configuration_item": "10.10.0.5",
-        "assignment_group": "DBAopsv3",
+        "assignment_group": "DBopsv3",
         "priority": 2,
     }
 

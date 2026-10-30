@@ -1,4 +1,4 @@
-"""Server-side client for the DBAops backend API. The browser never sees the backend token."""
+"""Server-side client for the DBopsv3 backend API. The browser never sees the backend token."""
 
 from typing import Any
 
@@ -17,9 +17,9 @@ async def _request(settings: Settings, method: str, path: str, **kwargs: Any) ->
         async with httpx.AsyncClient(base_url=settings.dbaops_api_url, headers=headers, timeout=15) as client:
             resp = await client.request(method, path, **kwargs)
     except httpx.HTTPError as exc:
-        raise BackendError(f"DBAops backend unreachable: {type(exc).__name__}") from exc
+        raise BackendError(f"DBopsv3 backend unreachable: {type(exc).__name__}") from exc
     if resp.status_code >= 400:
-        raise BackendError(f"DBAops backend returned HTTP {resp.status_code}: {resp.text[:300]}")
+        raise BackendError(f"DBopsv3 backend returned HTTP {resp.status_code}: {resp.text[:300]}")
     return resp.json()
 
 

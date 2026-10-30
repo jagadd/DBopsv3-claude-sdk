@@ -1,7 +1,7 @@
 [project]
 name = "dbaops"
 version = "0.1.0"
-description = "DBAops v3: autonomous SQL Server DBA ticket handler built on the Claude Agent SDK"
+description = "DBopsv3: autonomous SQL Server DBA ticket handler built on the Claude Agent SDK"
 requires-python = ">=3.12"
 dependencies = [
     "claude-agent-sdk>=0.2.174",

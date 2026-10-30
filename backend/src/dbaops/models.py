@@ -4,7 +4,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-ASSIGNMENT_GROUP = "DBAopsv3"
+ASSIGNMENT_GROUP = "DBopsv3"
 
 
 class Ticket(BaseModel):
@@ -17,7 +17,7 @@ class Ticket(BaseModel):
     description: str = Field(default="", max_length=8000)
     # Target SQL Server instance, e.g. SQLPROD01, SQLPROD01\INST1, sqlprod01.corp.local,1433
     configuration_item: str = Field(pattern=r"^[A-Za-z0-9_.\-\\,]{1,255}$")
-    assignment_group: Literal["DBAopsv3"]
+    assignment_group: Literal["DBopsv3"]
     priority: int = Field(default=4, ge=1, le=5)
     category: str | None = Field(default=None, max_length=100)
 

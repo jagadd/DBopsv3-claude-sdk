@@ -32,7 +32,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(
-    title="DBAops v3",
+    title="DBopsv3",
     description="Coordinator + specialist subagents (Claude Agent SDK) working SQL Server tickets. "
     "Click **Authorize** and enter the DBAOPS_API_TOKEN to try the endpoints.",
     lifespan=lifespan,

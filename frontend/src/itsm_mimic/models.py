@@ -3,7 +3,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-AGENT_GROUP = "DBAopsv3"
+AGENT_GROUP = "DBopsv3"
 ASSIGNMENT_GROUPS = [AGENT_GROUP, "DBA Team", "Windows Server", "Network"]
 STATES = ["New", "In Progress", "On Hold", "Resolved", "Closed", "Escalated"]
 CATEGORIES = ["Database", "Performance", "Backup", "Security", "Inquiry"]
@@ -11,7 +11,7 @@ NUMBER_PATTERN = r"^INC\d{7}$"
 APPROVAL_ID_PATTERN = r"^[a-f0-9]{12}$"
 
 State = Literal["New", "In Progress", "On Hold", "Resolved", "Closed", "Escalated"]
-Group = Literal["DBAopsv3", "DBA Team", "Windows Server", "Network"]
+Group = Literal["DBopsv3", "DBA Team", "Windows Server", "Network"]
 
 
 class IncidentIn(BaseModel):
@@ -32,7 +32,7 @@ class IncidentUpdate(BaseModel):
 
 
 class AgentWorkNote(BaseModel):
-    """Work note as posted by the DBAops backend."""
+    """Work note as posted by the DBopsv3 backend."""
 
     kind: str = Field(max_length=30)
     text: str = Field(min_length=1, max_length=20000)

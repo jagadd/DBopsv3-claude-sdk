@@ -1,7 +1,7 @@
 [project]
 name = "itsm-mimic"
 version = "0.1.0"
-description = "ServiceNow-style ITSM mimic: incidents, assignment groups, work notes, DBAopsv3 dispatch"
+description = "ServiceNow-style ITSM mimic: incidents, assignment groups, work notes, DBopsv3 dispatch"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.162",

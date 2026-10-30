@@ -35,7 +35,7 @@ def decide(agent_type: str | None, tool_name: str, tool_input: dict[str, Any]) -
     """Server-side policy for every tool call. Unknown agent types get the coordinator's (narrowest) rights."""
     if agent_type not in SUBAGENTS:
         if tool_name == AGENT_TOOL and tool_input.get("subagent_type") not in SUBAGENTS:
-            return Decision(Verdict.DENY, f"Delegate only to the DBAops specialists: {', '.join(SUBAGENTS)}.")
+            return Decision(Verdict.DENY, f"Delegate only to the DBopsv3 specialists: {', '.join(SUBAGENTS)}.")
         if tool_name in COORDINATOR_TOOLS:
             return Decision(Verdict.ALLOW)
         return Decision(Verdict.DENY, "The coordinator only delegates to specialist subagents via the Agent tool.")

@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     yield
 
 
-app = FastAPI(title="DBAops ITSM", lifespan=lifespan)
+app = FastAPI(title="DBopsv3 ITSM", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
 templates = Jinja2Templates(directory=HERE / "templates")
 bearer = HTTPBearer()
@@ -198,7 +198,7 @@ async def api_pending_approvals(number: Number) -> list[dict[str, Any]]:
 def api_add_work_note(number: Number, note: AgentWorkNote) -> dict[str, str]:
     _incident_or_404(number)
     created = note.created_at.isoformat(timespec="seconds") if note.created_at else None
-    author = f"DBAopsv3 · {note.agent}" if note.agent else "DBAopsv3 Agent"
+    author = f"DBopsv3 · {note.agent}" if note.agent else "DBopsv3 Agent"
     db.add_work_note(_db(), number, note.kind, author, note.text, created)
     return {"status": "created"}
 

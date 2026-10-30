@@ -1,8 +1,8 @@
-# DBAops v3 — multi-agent DBA ticket handler (Claude Agent SDK)
+# DBopsv3 — multi-agent DBA ticket handler (Claude Agent SDK)
 
 ## Architecture
 ```
-frontend/ ITSM mimic (:8080)                backend/ DBAops (:8000)                                  dbatools MCP
+frontend/ ITSM mimic (:8080)                backend/ DBopsv3 (:8000)                                  dbatools MCP
   incident ──dispatch JSON──>  POST /api/tickets → TicketRunner                                       server → SQL Server
                                  coordinator (Sonnet 5.5, Agent tool only)
                                    ├─ health-performance  (read-only)            ──dbatools tools──>
@@ -12,7 +12,7 @@ frontend/ ITSM mimic (:8080)                backend/ DBAops (:8000)             
   approval panel     <──────── GET /api/approvals ;  Approve/Deny ──> POST /api/approvals/{id}
   trace page         <──────── GET /api/tickets/{n}/runs, /trace
 ```
-1. An incident created with, or reassigned to, group **DBAopsv3** is POSTed to the backend by the frontend's `dispatch.py` (stand-in for the real pipeline).
+1. An incident created with, or reassigned to, group **DBopsv3** is POSTed to the backend by the frontend's `dispatch.py` (stand-in for the real pipeline).
 2. The **coordinator** reasons about the ticket and delegates to specialist subagents via the SDK's Agent tool — one or several in parallel. It never runs dbatools itself.
 3. Subagents use dbatools MCP tools. Every tool call passes the `PreToolUse` hook, which applies `policy.decide()` per agent type.
 4. State-changing commands from build-config / recovery-migration are routed (`permissionDecision: "ask"`) to `can_use_tool`, which blocks on `ApprovalBroker` until a human approves/denies in the frontend. Ticket goes On Hold meanwhile; the run's timeout clock is paused.

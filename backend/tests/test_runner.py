@@ -224,7 +224,7 @@ async def test_unknown_configuration_item_is_escalated_without_claude(
     store.start_run("r3", ticket.number, ticket.model_dump())
     assert await TicketRunner(ticket, "r3", settings, store, broker, itsm).run() is RunStatus.NEEDS_HUMAN
     assert _states(itsm) == [TicketState.ESCALATED]
-    assert "not a SQL Server instance managed by DBAops" in _notes(itsm)[0].text
+    assert "not a SQL Server instance managed by DBopsv3" in _notes(itsm)[0].text
 
 
 def test_strip_handback():

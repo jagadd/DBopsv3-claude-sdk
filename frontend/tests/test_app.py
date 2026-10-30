@@ -24,7 +24,7 @@ def test_create_incident_for_human_group_does_not_dispatch(client, form, dispatc
 
 def test_reassigning_to_agent_dispatches(client, form, dispatch):
     number = _create(client, form | {"assignment_group": "DBA Team"})
-    resp = client.post(f"/incidents/{number}", data={"assignment_group": "DBAopsv3", "state": "New", "priority": "2"})
+    resp = client.post(f"/incidents/{number}", data={"assignment_group": "DBopsv3", "state": "New", "priority": "2"})
     assert resp.status_code == 303
     dispatch.assert_awaited_once()
 
@@ -60,7 +60,7 @@ def test_agent_posts_work_note_and_state(client, form):
     data = client.get(f"/api/incidents/{number}").json()
     assert data["state"] == "In Progress"
     assert data["work_notes"][0]["text"] == "Checking tempdb"
-    assert data["work_notes"][0]["author"] == "DBAopsv3 Agent"
+    assert data["work_notes"][0]["author"] == "DBopsv3 Agent"
 
 
 def test_rejects_unknown_state_and_incident(client, form):
@@ -73,7 +73,7 @@ def test_agent_note_is_attributed_to_subagent(client, form):
     number = _create(client, form)
     note = {"kind": "result", "text": "tempdb 99% full", "agent": "health-performance"}
     assert client.post(f"/api/incidents/{number}/work_notes", json=note, headers=AUTH).status_code == 201
-    assert client.get(f"/api/incidents/{number}").json()["work_notes"][0]["author"] == "DBAopsv3 · health-performance"
+    assert client.get(f"/api/incidents/{number}").json()["work_notes"][0]["author"] == "DBopsv3 · health-performance"
 
 
 def test_approvals_are_proxied_and_decided(client, form, monkeypatch):

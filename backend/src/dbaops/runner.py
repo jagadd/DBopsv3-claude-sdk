@@ -397,7 +397,7 @@ class TicketRunner:
 
     async def _reject_unknown_target(self) -> RunStatus:
         summary = (
-            f"Configuration item {self.ticket.configuration_item} is not a SQL Server instance managed by DBAops "
+            f"Configuration item {self.ticket.configuration_item} is not a SQL Server instance managed by DBopsv3 "
             "(not in DBAOPS_INSTANCES). No action taken; escalating to a human DBA."
         )
         self._trace(COORDINATOR, "run_rejected", {"reason": "unknown configuration item"})

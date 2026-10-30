@@ -40,7 +40,7 @@ def form() -> dict:
         "short_description": "tempdb full on SQLPROD01",
         "description": "Users report error 1105.",
         "configuration_item": "SQLPROD01\\INST1",
-        "assignment_group": "DBAopsv3",
+        "assignment_group": "DBopsv3",
         "priority": "2",
         "category": "Database",
     }
